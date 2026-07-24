@@ -1,0 +1,135 @@
+{
+  "input": "-----BEGIN CERTIFICATE-----\nMIIBUTCCAQOgAwIBAgIUNf1a53VTWoV/95FOqloGoz3xIAQwBQYDK2VwMB4xHDAa\nBgNVBAMME2VkMjU1MTkuZXhhbXBsZS5jb20wHhcNMjYwNzI0MTkwMjUzWhcNMzYw\nNzIxMTkwMjUzWjAeMRwwGgYDVQQDDBNlZDI1NTE5LmV4YW1wbGUuY29tMCowBQYD\nK2VwAyEAAwKvXW7ZkJxR04Nu+JKFrFJEjNvMxbpZVNXtgU7g8XmjUzBRMB0GA1Ud\nDgQWBBSMo1SBUW2uhrzPNxLlAtfUFuvrkzAfBgNVHSMEGDAWgBSMo1SBUW2uhrzP\nNxLlAtfUFuvrkzAPBgNVHRMBAf8EBTADAQH/MAUGAytlcANBAJ1PO3wy91y6h/TX\n7/A8bDQqcEDkQV/gXS47E1DIaIInYpL6BEFIS/7F8oDST/rVUzhmAMQMU7BeZP8T\nsFmbrwM=\n-----END CERTIFICATE-----",
+  "want": [
+    {
+      "AuthorityKeyId": "jKNUgVFtroa8zzcS5QLX1Bbr65M=",
+      "BasicConstraintsValid": true,
+      "CRLDistributionPoints": null,
+      "DNSNames": null,
+      "EmailAddresses": null,
+      "ExcludedDNSDomains": null,
+      "ExcludedEmailAddresses": null,
+      "ExcludedIPRanges": null,
+      "ExcludedURIDomains": null,
+      "ExtKeyUsage": null,
+      "Extensions": [
+        {
+          "Critical": false,
+          "Id": [
+            2,
+            5,
+            29,
+            14
+          ],
+          "Value": "BBSMo1SBUW2uhrzPNxLlAtfUFuvrkw=="
+        },
+        {
+          "Critical": false,
+          "Id": [
+            2,
+            5,
+            29,
+            35
+          ],
+          "Value": "MBaAFIyjVIFRba6GvM83EuUC19QW6+uT"
+        },
+        {
+          "Critical": true,
+          "Id": [
+            2,
+            5,
+            29,
+            19
+          ],
+          "Value": "MAMBAf8="
+        }
+      ],
+      "ExtraExtensions": null,
+      "IPAddresses": null,
+      "InhibitAnyPolicy": 0,
+      "InhibitAnyPolicyZero": false,
+      "InhibitPolicyMapping": 0,
+      "InhibitPolicyMappingZero": false,
+      "IsCA": true,
+      "Issuer": {
+        "CommonName": "ed25519.example.com",
+        "Country": null,
+        "ExtraNames": null,
+        "Locality": null,
+        "Names": [
+          {
+            "Type": [
+              2,
+              5,
+              4,
+              3
+            ],
+            "Value": "ed25519.example.com"
+          }
+        ],
+        "Organization": null,
+        "OrganizationalUnit": null,
+        "PostalCode": null,
+        "Province": null,
+        "SerialNumber": "",
+        "StreetAddress": null
+      },
+      "IssuingCertificateURL": null,
+      "KeyUsage": 0,
+      "MaxPathLen": -1,
+      "MaxPathLenZero": false,
+      "NotAfter": "2036-07-21T19:02:53Z",
+      "NotBefore": "2026-07-24T19:02:53Z",
+      "OCSPServer": null,
+      "PermittedDNSDomains": null,
+      "PermittedDNSDomainsCritical": false,
+      "PermittedEmailAddresses": null,
+      "PermittedIPRanges": null,
+      "PermittedURIDomains": null,
+      "Policies": null,
+      "PolicyIdentifiers": null,
+      "PolicyMappings": null,
+      "PublicKey": "AwKvXW7ZkJxR04Nu+JKFrFJEjNvMxbpZVNXtgU7g8Xk=",
+      "PublicKeyAlgorithm": 4,
+      "Raw": "MIIBUTCCAQOgAwIBAgIUNf1a53VTWoV/95FOqloGoz3xIAQwBQYDK2VwMB4xHDAaBgNVBAMME2VkMjU1MTkuZXhhbXBsZS5jb20wHhcNMjYwNzI0MTkwMjUzWhcNMzYwNzIxMTkwMjUzWjAeMRwwGgYDVQQDDBNlZDI1NTE5LmV4YW1wbGUuY29tMCowBQYDK2VwAyEAAwKvXW7ZkJxR04Nu+JKFrFJEjNvMxbpZVNXtgU7g8XmjUzBRMB0GA1UdDgQWBBSMo1SBUW2uhrzPNxLlAtfUFuvrkzAfBgNVHSMEGDAWgBSMo1SBUW2uhrzPNxLlAtfUFuvrkzAPBgNVHRMBAf8EBTADAQH/MAUGAytlcANBAJ1PO3wy91y6h/TX7/A8bDQqcEDkQV/gXS47E1DIaIInYpL6BEFIS/7F8oDST/rVUzhmAMQMU7BeZP8TsFmbrwM=",
+      "RawIssuer": "MB4xHDAaBgNVBAMME2VkMjU1MTkuZXhhbXBsZS5jb20=",
+      "RawSubject": "MB4xHDAaBgNVBAMME2VkMjU1MTkuZXhhbXBsZS5jb20=",
+      "RawSubjectPublicKeyInfo": "MCowBQYDK2VwAyEAAwKvXW7ZkJxR04Nu+JKFrFJEjNvMxbpZVNXtgU7g8Xk=",
+      "RawTBSCertificate": "MIIBA6ADAgECAhQ1/VrndVNahX/3kU6qWgajPfEgBDAFBgMrZXAwHjEcMBoGA1UEAwwTZWQyNTUxOS5leGFtcGxlLmNvbTAeFw0yNjA3MjQxOTAyNTNaFw0zNjA3MjExOTAyNTNaMB4xHDAaBgNVBAMME2VkMjU1MTkuZXhhbXBsZS5jb20wKjAFBgMrZXADIQADAq9dbtmQnFHTg274koWsUkSM28zFullU1e2BTuDxeaNTMFEwHQYDVR0OBBYEFIyjVIFRba6GvM83EuUC19QW6+uTMB8GA1UdIwQYMBaAFIyjVIFRba6GvM83EuUC19QW6+uTMA8GA1UdEwEB/wQFMAMBAf8=",
+      "RequireExplicitPolicy": 0,
+      "RequireExplicitPolicyZero": false,
+      "SerialNumber": 308226518255804831738055796426187883508931829764,
+      "Signature": "nU87fDL3XLqH9Nfv8DxsNCpwQORBX+BdLjsTUMhogidikvoEQUhL/sXygNJP+tVTOGYAxAxTsF5k/xOwWZuvAw==",
+      "SignatureAlgorithm": 16,
+      "Subject": {
+        "CommonName": "ed25519.example.com",
+        "Country": null,
+        "ExtraNames": null,
+        "Locality": null,
+        "Names": [
+          {
+            "Type": [
+              2,
+              5,
+              4,
+              3
+            ],
+            "Value": "ed25519.example.com"
+          }
+        ],
+        "Organization": null,
+        "OrganizationalUnit": null,
+        "PostalCode": null,
+        "Province": null,
+        "SerialNumber": "",
+        "StreetAddress": null
+      },
+      "SubjectKeyId": "jKNUgVFtroa8zzcS5QLX1Bbr65M=",
+      "URIStrings": null,
+      "URIs": null,
+      "UnhandledCriticalExtensions": null,
+      "UnknownExtKeyUsage": null,
+      "Version": 3
+    }
+  ]
+}

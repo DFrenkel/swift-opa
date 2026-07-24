@@ -1,0 +1,296 @@
+{
+  "input": "MIIDujCCAqKgAwIBAgIIE31FZVaPXTUwDQYJKoZIhvcNAQEFBQAwSTELMAkGA1UEBhMCVVMxEzARBgNVBAoTCkdvb2dsZSBJbmMxJTAjBgNVBAMTHEdvb2dsZSBJbnRlcm5ldCBBdXRob3JpdHkgRzIwHhcNMTQwMTI5MTMyNzQzWhcNMTQwNTI5MDAwMDAwWjBpMQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5pYTEWMBQGA1UEBwwNTW91bnRhaW4gVmlldzETMBEGA1UECgwKR29vZ2xlIEluYzEYMBYGA1UEAwwPbWFpbC5nb29nbGUuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEfRrObuSW5T7q5CnSEqefEmtH4CCv6+5EckuriNr1CjfVvqzwfAhopXkLrq45EQm8vkmf7W96XJhC7ZM0dYi1/qOCAU8wggFLMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAaBgNVHREEEzARgg9tYWlsLmdvb2dsZS5jb20wCwYDVR0PBAQDAgeAMGgGCCsGAQUFBwEBBFwwWjArBggrBgEFBQcwAoYfaHR0cDovL3BraS5nb29nbGUuY29tL0dJQUcyLmNydDArBggrBgEFBQcwAYYfaHR0cDovL2NsaWVudHMxLmdvb2dsZS5jb20vb2NzcDAdBgNVHQ4EFgQUiJxtimAuTfwb+aUtBn5UYKreKvMwDAYDVR0TAQH/BAIwADAfBgNVHSMEGDAWgBRK3QYWG7z2aLV29YG2u2IaulqBLzAXBgNVHSAEEDAOMAwGCisGAQQB1nkCBQEwMAYDVR0fBCkwJzAloCOgIYYfaHR0cDovL3BraS5nb29nbGUuY29tL0dJQUcyLmNybDANBgkqhkiG9w0BAQUFAAOCAQEAH6RYHxHdcGpMpFE3oxDoFnP+gtuBCHan2yE2GRbJ2Cw8Lw0MmuKqHlf9RSeYfd3BXeKkj1qO6TVKwCh+0HdZk283TZZyzmEOyclm3UGFYe82P/iDFt+CeQ3NpmBg+GoaVCuWAARJN/KfglbLyyYygcQq0SgeDh8dRKUiaW3HQSoYvTvdTuqzwK4CXsr3b5/dAOY8uMuG/IAR3FgwTbZ1dtoWRvOTa8hYiU6A475WuZKyEHcwnGYe57u2I2KbMgcKjPniocj4QzgYsVAVKW3IwaOhyE+vPxsiUkvQHdO2fojCkY8jg70jxM+gu59tPDNbw3Uh/2Ij310FgTHsnGQMyA==",
+  "want": [
+    {
+      "AuthorityKeyId": "St0GFhu89mi1dvWBtrtiGrpagS8=",
+      "BasicConstraintsValid": true,
+      "CRLDistributionPoints": [
+        "http://pki.google.com/GIAG2.crl"
+      ],
+      "DNSNames": [
+        "mail.google.com"
+      ],
+      "EmailAddresses": null,
+      "ExcludedDNSDomains": null,
+      "ExcludedEmailAddresses": null,
+      "ExcludedIPRanges": null,
+      "ExcludedURIDomains": null,
+      "ExtKeyUsage": [
+        1,
+        2
+      ],
+      "Extensions": [
+        {
+          "Critical": false,
+          "Id": [
+            2,
+            5,
+            29,
+            37
+          ],
+          "Value": "MBQGCCsGAQUFBwMBBggrBgEFBQcDAg=="
+        },
+        {
+          "Critical": false,
+          "Id": [
+            2,
+            5,
+            29,
+            17
+          ],
+          "Value": "MBGCD21haWwuZ29vZ2xlLmNvbQ=="
+        },
+        {
+          "Critical": false,
+          "Id": [
+            2,
+            5,
+            29,
+            15
+          ],
+          "Value": "AwIHgA=="
+        },
+        {
+          "Critical": false,
+          "Id": [
+            1,
+            3,
+            6,
+            1,
+            5,
+            5,
+            7,
+            1,
+            1
+          ],
+          "Value": "MFowKwYIKwYBBQUHMAKGH2h0dHA6Ly9wa2kuZ29vZ2xlLmNvbS9HSUFHMi5jcnQwKwYIKwYBBQUHMAGGH2h0dHA6Ly9jbGllbnRzMS5nb29nbGUuY29tL29jc3A="
+        },
+        {
+          "Critical": false,
+          "Id": [
+            2,
+            5,
+            29,
+            14
+          ],
+          "Value": "BBSInG2KYC5N/Bv5pS0GflRgqt4q8w=="
+        },
+        {
+          "Critical": true,
+          "Id": [
+            2,
+            5,
+            29,
+            19
+          ],
+          "Value": "MAA="
+        },
+        {
+          "Critical": false,
+          "Id": [
+            2,
+            5,
+            29,
+            35
+          ],
+          "Value": "MBaAFErdBhYbvPZotXb1gba7Yhq6WoEv"
+        },
+        {
+          "Critical": false,
+          "Id": [
+            2,
+            5,
+            29,
+            32
+          ],
+          "Value": "MA4wDAYKKwYBBAHWeQIFAQ=="
+        },
+        {
+          "Critical": false,
+          "Id": [
+            2,
+            5,
+            29,
+            31
+          ],
+          "Value": "MCcwJaAjoCGGH2h0dHA6Ly9wa2kuZ29vZ2xlLmNvbS9HSUFHMi5jcmw="
+        }
+      ],
+      "ExtraExtensions": null,
+      "IPAddresses": null,
+      "InhibitAnyPolicy": 0,
+      "InhibitAnyPolicyZero": false,
+      "InhibitPolicyMapping": 0,
+      "InhibitPolicyMappingZero": false,
+      "IsCA": false,
+      "Issuer": {
+        "CommonName": "Google Internet Authority G2",
+        "Country": [
+          "US"
+        ],
+        "ExtraNames": null,
+        "Locality": null,
+        "Names": [
+          {
+            "Type": [
+              2,
+              5,
+              4,
+              6
+            ],
+            "Value": "US"
+          },
+          {
+            "Type": [
+              2,
+              5,
+              4,
+              10
+            ],
+            "Value": "Google Inc"
+          },
+          {
+            "Type": [
+              2,
+              5,
+              4,
+              3
+            ],
+            "Value": "Google Internet Authority G2"
+          }
+        ],
+        "Organization": [
+          "Google Inc"
+        ],
+        "OrganizationalUnit": null,
+        "PostalCode": null,
+        "Province": null,
+        "SerialNumber": "",
+        "StreetAddress": null
+      },
+      "IssuingCertificateURL": [
+        "http://pki.google.com/GIAG2.crt"
+      ],
+      "KeyUsage": 1,
+      "MaxPathLen": -1,
+      "MaxPathLenZero": false,
+      "NotAfter": "2014-05-29T00:00:00Z",
+      "NotBefore": "2014-01-29T13:27:43Z",
+      "OCSPServer": [
+        "http://clients1.google.com/ocsp"
+      ],
+      "PermittedDNSDomains": null,
+      "PermittedDNSDomainsCritical": false,
+      "PermittedEmailAddresses": null,
+      "PermittedIPRanges": null,
+      "PermittedURIDomains": null,
+      "Policies": [
+        "1.3.6.1.4.1.11129.2.5.1"
+      ],
+      "PolicyIdentifiers": [
+        [
+          1,
+          3,
+          6,
+          1,
+          4,
+          1,
+          11129,
+          2,
+          5,
+          1
+        ]
+      ],
+      "PolicyMappings": null,
+      "PublicKey": {
+        "Curve": {},
+        "X": 56586468846007386087027818441727681132670457965498806310232910533874685381175,
+        "Y": 96679531274364665175526015293716792376771059033186940533962079642733658027518
+      },
+      "PublicKeyAlgorithm": 3,
+      "Raw": "MIIDujCCAqKgAwIBAgIIE31FZVaPXTUwDQYJKoZIhvcNAQEFBQAwSTELMAkGA1UEBhMCVVMxEzARBgNVBAoTCkdvb2dsZSBJbmMxJTAjBgNVBAMTHEdvb2dsZSBJbnRlcm5ldCBBdXRob3JpdHkgRzIwHhcNMTQwMTI5MTMyNzQzWhcNMTQwNTI5MDAwMDAwWjBpMQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5pYTEWMBQGA1UEBwwNTW91bnRhaW4gVmlldzETMBEGA1UECgwKR29vZ2xlIEluYzEYMBYGA1UEAwwPbWFpbC5nb29nbGUuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEfRrObuSW5T7q5CnSEqefEmtH4CCv6+5EckuriNr1CjfVvqzwfAhopXkLrq45EQm8vkmf7W96XJhC7ZM0dYi1/qOCAU8wggFLMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAaBgNVHREEEzARgg9tYWlsLmdvb2dsZS5jb20wCwYDVR0PBAQDAgeAMGgGCCsGAQUFBwEBBFwwWjArBggrBgEFBQcwAoYfaHR0cDovL3BraS5nb29nbGUuY29tL0dJQUcyLmNydDArBggrBgEFBQcwAYYfaHR0cDovL2NsaWVudHMxLmdvb2dsZS5jb20vb2NzcDAdBgNVHQ4EFgQUiJxtimAuTfwb+aUtBn5UYKreKvMwDAYDVR0TAQH/BAIwADAfBgNVHSMEGDAWgBRK3QYWG7z2aLV29YG2u2IaulqBLzAXBgNVHSAEEDAOMAwGCisGAQQB1nkCBQEwMAYDVR0fBCkwJzAloCOgIYYfaHR0cDovL3BraS5nb29nbGUuY29tL0dJQUcyLmNybDANBgkqhkiG9w0BAQUFAAOCAQEAH6RYHxHdcGpMpFE3oxDoFnP+gtuBCHan2yE2GRbJ2Cw8Lw0MmuKqHlf9RSeYfd3BXeKkj1qO6TVKwCh+0HdZk283TZZyzmEOyclm3UGFYe82P/iDFt+CeQ3NpmBg+GoaVCuWAARJN/KfglbLyyYygcQq0SgeDh8dRKUiaW3HQSoYvTvdTuqzwK4CXsr3b5/dAOY8uMuG/IAR3FgwTbZ1dtoWRvOTa8hYiU6A475WuZKyEHcwnGYe57u2I2KbMgcKjPniocj4QzgYsVAVKW3IwaOhyE+vPxsiUkvQHdO2fojCkY8jg70jxM+gu59tPDNbw3Uh/2Ij310FgTHsnGQMyA==",
+      "RawIssuer": "MEkxCzAJBgNVBAYTAlVTMRMwEQYDVQQKEwpHb29nbGUgSW5jMSUwIwYDVQQDExxHb29nbGUgSW50ZXJuZXQgQXV0aG9yaXR5IEcy",
+      "RawSubject": "MGkxCzAJBgNVBAYTAlVTMRMwEQYDVQQIDApDYWxpZm9ybmlhMRYwFAYDVQQHDA1Nb3VudGFpbiBWaWV3MRMwEQYDVQQKDApHb29nbGUgSW5jMRgwFgYDVQQDDA9tYWlsLmdvb2dsZS5jb20=",
+      "RawSubjectPublicKeyInfo": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEfRrObuSW5T7q5CnSEqefEmtH4CCv6+5EckuriNr1CjfVvqzwfAhopXkLrq45EQm8vkmf7W96XJhC7ZM0dYi1/g==",
+      "RawTBSCertificate": "MIICoqADAgECAggTfUVlVo9dNTANBgkqhkiG9w0BAQUFADBJMQswCQYDVQQGEwJVUzETMBEGA1UEChMKR29vZ2xlIEluYzElMCMGA1UEAxMcR29vZ2xlIEludGVybmV0IEF1dGhvcml0eSBHMjAeFw0xNDAxMjkxMzI3NDNaFw0xNDA1MjkwMDAwMDBaMGkxCzAJBgNVBAYTAlVTMRMwEQYDVQQIDApDYWxpZm9ybmlhMRYwFAYDVQQHDA1Nb3VudGFpbiBWaWV3MRMwEQYDVQQKDApHb29nbGUgSW5jMRgwFgYDVQQDDA9tYWlsLmdvb2dsZS5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAR9Gs5u5JblPurkKdISp58Sa0fgIK/r7kRyS6uI2vUKN9W+rPB8CGileQuurjkRCby+SZ/tb3pcmELtkzR1iLX+o4IBTzCCAUswHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMBoGA1UdEQQTMBGCD21haWwuZ29vZ2xlLmNvbTALBgNVHQ8EBAMCB4AwaAYIKwYBBQUHAQEEXDBaMCsGCCsGAQUFBzAChh9odHRwOi8vcGtpLmdvb2dsZS5jb20vR0lBRzIuY3J0MCsGCCsGAQUFBzABhh9odHRwOi8vY2xpZW50czEuZ29vZ2xlLmNvbS9vY3NwMB0GA1UdDgQWBBSInG2KYC5N/Bv5pS0GflRgqt4q8zAMBgNVHRMBAf8EAjAAMB8GA1UdIwQYMBaAFErdBhYbvPZotXb1gba7Yhq6WoEvMBcGA1UdIAQQMA4wDAYKKwYBBAHWeQIFATAwBgNVHR8EKTAnMCWgI6Ahhh9odHRwOi8vcGtpLmdvb2dsZS5jb20vR0lBRzIuY3Js",
+      "RequireExplicitPolicy": 0,
+      "RequireExplicitPolicyZero": false,
+      "SerialNumber": 1404354960355712309,
+      "Signature": "H6RYHxHdcGpMpFE3oxDoFnP+gtuBCHan2yE2GRbJ2Cw8Lw0MmuKqHlf9RSeYfd3BXeKkj1qO6TVKwCh+0HdZk283TZZyzmEOyclm3UGFYe82P/iDFt+CeQ3NpmBg+GoaVCuWAARJN/KfglbLyyYygcQq0SgeDh8dRKUiaW3HQSoYvTvdTuqzwK4CXsr3b5/dAOY8uMuG/IAR3FgwTbZ1dtoWRvOTa8hYiU6A475WuZKyEHcwnGYe57u2I2KbMgcKjPniocj4QzgYsVAVKW3IwaOhyE+vPxsiUkvQHdO2fojCkY8jg70jxM+gu59tPDNbw3Uh/2Ij310FgTHsnGQMyA==",
+      "SignatureAlgorithm": 3,
+      "Subject": {
+        "CommonName": "mail.google.com",
+        "Country": [
+          "US"
+        ],
+        "ExtraNames": null,
+        "Locality": [
+          "Mountain View"
+        ],
+        "Names": [
+          {
+            "Type": [
+              2,
+              5,
+              4,
+              6
+            ],
+            "Value": "US"
+          },
+          {
+            "Type": [
+              2,
+              5,
+              4,
+              8
+            ],
+            "Value": "California"
+          },
+          {
+            "Type": [
+              2,
+              5,
+              4,
+              7
+            ],
+            "Value": "Mountain View"
+          },
+          {
+            "Type": [
+              2,
+              5,
+              4,
+              10
+            ],
+            "Value": "Google Inc"
+          },
+          {
+            "Type": [
+              2,
+              5,
+              4,
+              3
+            ],
+            "Value": "mail.google.com"
+          }
+        ],
+        "Organization": [
+          "Google Inc"
+        ],
+        "OrganizationalUnit": null,
+        "PostalCode": null,
+        "Province": [
+          "California"
+        ],
+        "SerialNumber": "",
+        "StreetAddress": null
+      },
+      "SubjectKeyId": "iJxtimAuTfwb+aUtBn5UYKreKvM=",
+      "URIStrings": null,
+      "URIs": null,
+      "UnhandledCriticalExtensions": null,
+      "UnknownExtKeyUsage": null,
+      "Version": 3
+    }
+  ]
+}
