@@ -370,7 +370,7 @@ extension BuiltinFuncs {
 
     /// OPA (via Go's json.Marshal) emits an absent string slice as null rather
     /// than an empty array.
-    fileprivate static func namesArrayOrNull(_ names: [String]) -> AST.RegoValue {
+    static func namesArrayOrNull(_ names: [String]) -> AST.RegoValue {
         names.isEmpty ? .null : .array(names.map { .string($0) })
     }
 }
