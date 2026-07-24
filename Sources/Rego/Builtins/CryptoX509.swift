@@ -178,7 +178,7 @@ extension BuiltinFuncs {
         objects.reserveCapacity(blocks.count)
         for block in blocks {
             if let cert = try? Certificate(derEncoded: block) {
-                objects.append(certificateToRegoValue(cert))
+                objects.append(certificateObject(certFields(fromSwiftCert: cert, der: block)))
             } else if let fields = permissiveCertificateFields(block) {
                 objects.append(
                     certificateObject(commonName: fields.commonName ?? "", dns: fields.dns, uris: fields.uris))
