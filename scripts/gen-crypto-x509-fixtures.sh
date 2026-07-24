@@ -23,6 +23,24 @@ proc = subprocess.run(
 if proc.returncode != 0:
     sys.exit(f"opa failed for {name}: {proc.stderr}")
 want = json.loads(proc.stdout)["result"][0]["expressions"][0]["value"]
+
+# RegoValue cannot hold big integers losslessly (Int64/Decimal backed), so this
+# round emits SerialNumber and the RSA/ECDSA key components as decimal strings.
+# Python's json keeps them as exact ints, so convert those fields here. Reverse
+# this transform (and regenerate) once RegoNumber gains arbitrary precision.
+BIG_INT_FIELDS = {"SerialNumber", "N", "X", "Y"}
+
+def stringify_big_ints(node):
+    if isinstance(node, list):
+        return [stringify_big_ints(x) for x in node]
+    if isinstance(node, dict):
+        return {
+            k: (str(v) if k in BIG_INT_FIELDS and isinstance(v, int) else stringify_big_ints(v))
+            for k, v in node.items()
+        }
+    return node
+
+want = stringify_big_ints(want)
 json.dump({"input": inp, "want": want}, open(out, "w"), indent=2, sort_keys=True)
 print(f"wrote {name}.json")
 PY
