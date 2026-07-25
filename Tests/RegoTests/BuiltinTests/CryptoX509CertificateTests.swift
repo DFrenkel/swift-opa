@@ -27,7 +27,7 @@ extension BuiltinTests.CryptoX509CertificateTests {
         return .object(out)
     }
 
-    @Test(arguments: ["ecdsa-leaf", "rsa-leaf", "ed25519-leaf", "chain"])
+    @Test(arguments: ["ecdsa-leaf", "rsa-leaf", "ed25519-leaf", "chain", "rsa-1024-chain"])
     func matchesOpaGolden(name: String) throws {
         let fixture = try BuiltinTests.cryptoX509Fixture(name)
         let got = try BuiltinFuncs.x509ParseCertificates(ctx: BuiltinContext(), args: [.string(fixture.input)])

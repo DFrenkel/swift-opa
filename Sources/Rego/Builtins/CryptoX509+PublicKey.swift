@@ -18,9 +18,14 @@ extension BuiltinFuncs {
     /// `decimalString`). Returns nil for unsupported key types so the caller can
     /// zero-value the field.
     static func publicKeyObject(fromSPKIDer der: [UInt8]) -> (algorithm: Int, key: AST.RegoValue)? {
-        guard let root = try? DER.parse(der),
-            case .constructed(let top) = root.content
-        else { return nil }
+        guard let root = try? DER.parse(der) else { return nil }
+        return publicKeyObject(fromSPKINode: root)
+    }
+
+    /// The node form, used by the permissive DER path which already holds the
+    /// parsed SubjectPublicKeyInfo node.
+    static func publicKeyObject(fromSPKINode root: ASN1Node) -> (algorithm: Int, key: AST.RegoValue)? {
+        guard case .constructed(let top) = root.content else { return nil }
         let topNodes = Array(top)
         guard topNodes.count >= 2,
             case .constructed(let algSeq) = topNodes[0].content,

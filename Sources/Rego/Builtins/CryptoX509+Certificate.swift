@@ -137,6 +137,146 @@ extension BuiltinFuncs {
         return Array(bits.dropFirst())
     }
 
+    // MARK: - Permissive DER path
+
+    /// Builds `CertFields` for certificates swift-certificates refuses to
+    /// construct (notably RSA keys under 2048 bits). Reads the TBSCertificate
+    /// straight from the DER. Because big integers are string-encoded from raw
+    /// bytes, reading the SubjectPublicKeyInfo here is not blocked by the
+    /// key-size rejection, so this path can still emit PublicKey.
+    static func certFields(fromDER der: [UInt8]) -> CertFields? {
+        guard let root = try? DER.parse(der), case .constructed(let certSeq) = root.content else { return nil }
+        let certNodes = Array(certSeq)
+        guard certNodes.count >= 3, case .constructed(let tbsSeq) = certNodes[0].content else { return nil }
+        let tbs = Array(tbsSeq)
+        var idx = 0
+
+        // Optional [0] EXPLICIT version, DEFAULT v1.
+        var version = 1
+        if let first = tbs.first, first.identifier.tagClass == .contextSpecific, first.identifier.tagNumber == 0 {
+            if case .constructed(let wrapper) = first.content, let vNode = Array(wrapper).first,
+                let vBytes = try? Array(ArraySlice<UInt8>(derEncoded: vNode))
+            {
+                version = vBytes.reduce(0) { $0 * 256 + Int($1) } + 1
+            }
+            idx = 1
+        }
+
+        guard tbs.count > idx, let serial = try? Array(ArraySlice<UInt8>(derEncoded: tbs[idx])) else { return nil }
+        idx += 1
+
+        guard tbs.count > idx, case .constructed(let sigAlgSeq) = tbs[idx].content,
+            let sigOIDNode = Array(sigAlgSeq).first,
+            let sigOID = try? ASN1ObjectIdentifier(derEncoded: sigOIDNode)
+        else { return nil }
+        let signatureAlgorithm = goSignatureAlgorithm(oid: sigOID)
+        idx += 1
+
+        guard tbs.count > idx, let issuer = try? DistinguishedName(derEncoded: tbs[idx]) else { return nil }
+        idx += 1
+
+        guard tbs.count > idx, case .constructed(let validitySeq) = tbs[idx].content else { return nil }
+        let validity = Array(validitySeq)
+        guard validity.count >= 2,
+            let notBefore = parseASN1Time(validity[0]), let notAfter = parseASN1Time(validity[1])
+        else { return nil }
+        idx += 1
+
+        guard tbs.count > idx, let subject = try? DistinguishedName(derEncoded: tbs[idx]) else { return nil }
+        idx += 1
+
+        guard tbs.count > idx else { return nil }
+        var publicKeyAlgorithm = 0
+        var publicKey: AST.RegoValue = .null
+        if let obj = publicKeyObject(fromSPKINode: tbs[idx]) {
+            publicKeyAlgorithm = obj.algorithm
+            publicKey = obj.key
+        }
+        idx += 1
+
+        var extensions: [X509Ext] = []
+        for node in tbs[idx...]
+        where node.identifier.tagClass == .contextSpecific && node.identifier.tagNumber == 3 {
+            extensions = parseExtensions(fromExplicit: node)
+            break
+        }
+
+        return CertFields(
+            version: version,
+            serialNumber: serial,
+            signatureAlgorithm: signatureAlgorithm,
+            signatureBytes: signatureBytes(fromCertDER: der),
+            notBefore: notBefore,
+            notAfter: notAfter,
+            subject: nameObject(subject),
+            issuer: nameObject(issuer),
+            publicKeyAlgorithm: publicKeyAlgorithm,
+            publicKey: publicKey,
+            extensions: extensions,
+            raw: der
+        )
+    }
+
+    /// Parses the `[3] EXPLICIT Extensions` node into normalized extensions.
+    private static func parseExtensions(fromExplicit node: ASN1Node) -> [X509Ext] {
+        guard case .constructed(let wrapper) = node.content,
+            let seq = Array(wrapper).first,
+            case .constructed(let exts) = seq.content
+        else { return [] }
+        var result: [X509Ext] = []
+        for ext in exts {
+            guard case .constructed(let fields) = ext.content else { continue }
+            var iterator = fields.makeIterator()
+            guard let oidNode = iterator.next(),
+                let oid = try? ASN1ObjectIdentifier(derEncoded: oidNode),
+                var next = iterator.next()
+            else { continue }
+            var critical = false
+            if next.identifier == .boolean {
+                if case .primitive(let b) = next.content { critical = (b.first ?? 0) != 0 }
+                guard let after = iterator.next() else { continue }
+                next = after
+            }
+            guard case .primitive(let octets) = next.content else { continue }
+            result.append(X509Ext(oid: oid.oidComponents, critical: critical, value: Array(octets)))
+        }
+        return result
+    }
+
+    /// Parses an ASN.1 UTCTime or GeneralizedTime (Zulu form) into a Date.
+    private static func parseASN1Time(_ node: ASN1Node) -> Date? {
+        guard case .primitive(let bytes) = node.content else { return nil }
+        var text = String(decoding: bytes, as: UTF8.self)
+        guard text.hasSuffix("Z") else { return nil }
+        text.removeLast()
+        let digits = Array(text)
+        func num(_ lower: Int, _ upper: Int) -> Int? {
+            guard upper <= digits.count else { return nil }
+            return Int(String(digits[lower..<upper]))
+        }
+
+        var comps = DateComponents()
+        if digits.count == 12 {  // UTCTime: YYMMDDHHMMSS
+            guard let yy = num(0, 2), let mo = num(2, 4), let dd = num(4, 6),
+                let hh = num(6, 8), let mi = num(8, 10), let ss = num(10, 12)
+            else { return nil }
+            comps.year = yy < 50 ? 2000 + yy : 1900 + yy
+            comps.month = mo; comps.day = dd; comps.hour = hh; comps.minute = mi; comps.second = ss
+        } else if digits.count == 14 {  // GeneralizedTime: YYYYMMDDHHMMSS
+            guard let yyyy = num(0, 4), let mo = num(4, 6), let dd = num(6, 8),
+                let hh = num(8, 10), let mi = num(10, 12), let ss = num(12, 14)
+            else { return nil }
+            comps.year = yyyy; comps.month = mo; comps.day = dd
+            comps.hour = hh; comps.minute = mi; comps.second = ss
+        } else {
+            return nil
+        }
+
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "UTC")!
+        return calendar.date(from: comps)
+    }
+
     // MARK: - Small encoders
 
     static func regoInt(_ value: Int) -> AST.RegoValue {

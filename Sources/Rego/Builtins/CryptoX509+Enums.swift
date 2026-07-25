@@ -20,6 +20,12 @@ extension BuiltinFuncs {
         }
     }
 
+    /// Maps a signature-algorithm OID to Go's `x509.SignatureAlgorithm`
+    /// integer. Used by the permissive DER path, which reads the OID directly.
+    static func goSignatureAlgorithm(oid: ASN1ObjectIdentifier) -> Int {
+        return goSignatureAlgorithms[oid] ?? 0
+    }
+
     /// Maps a public-key algorithm OID to Go's `x509.PublicKeyAlgorithm`
     /// integer. Unknown OIDs map to 0.
     static func goPublicKeyAlgorithm(_ oid: ASN1ObjectIdentifier) -> Int {
@@ -49,6 +55,20 @@ extension BuiltinFuncs {
         return value
     }
 
+    private static let goSignatureAlgorithms: [ASN1ObjectIdentifier: Int] = [
+        [1, 2, 840, 113549, 1, 1, 2]: 1,  // md2WithRSA
+        [1, 2, 840, 113549, 1, 1, 4]: 2,  // md5WithRSA
+        [1, 2, 840, 113549, 1, 1, 5]: 3,  // sha1WithRSA
+        [1, 2, 840, 113549, 1, 1, 11]: 4,  // sha256WithRSA
+        [1, 2, 840, 113549, 1, 1, 12]: 5,  // sha384WithRSA
+        [1, 2, 840, 113549, 1, 1, 13]: 6,  // sha512WithRSA
+        [1, 2, 840, 10045, 4, 1]: 9,  // ecdsaWithSHA1
+        [1, 2, 840, 10045, 4, 3, 2]: 10,  // ecdsaWithSHA256
+        [1, 2, 840, 10045, 4, 3, 3]: 11,  // ecdsaWithSHA384
+        [1, 2, 840, 10045, 4, 3, 4]: 12,  // ecdsaWithSHA512
+        [1, 3, 101, 112]: 16,  // ed25519
+    ]
+
     private static let goPublicKeyAlgorithms: [ASN1ObjectIdentifier: Int] = [
         [1, 2, 840, 113549, 1, 1, 1]: 1,  // RSA
         [1, 2, 840, 10040, 4, 1]: 2,       // DSA
@@ -65,7 +85,11 @@ extension BuiltinFuncs {
         [1, 3, 6, 1, 5, 5, 7, 3, 5]: 5,    // ipsecEndSystem
         [1, 3, 6, 1, 5, 5, 7, 3, 6]: 6,    // ipsecTunnel
         [1, 3, 6, 1, 5, 5, 7, 3, 7]: 7,    // ipsecUser
-        [1, 3, 6, 1, 5, 5, 7, 3, 8]: 8,    // timeStamping
-        [1, 3, 6, 1, 5, 5, 7, 3, 9]: 9,    // ocspSigning
+        [1, 3, 6, 1, 5, 5, 7, 3, 8]: 8,  // timeStamping
+        [1, 3, 6, 1, 5, 5, 7, 3, 9]: 9,  // ocspSigning
+        [1, 3, 6, 1, 4, 1, 311, 10, 3, 3]: 10,  // microsoftServerGatedCrypto
+        [2, 16, 840, 1, 113730, 4, 1]: 11,  // netscapeServerGatedCrypto
+        [1, 3, 6, 1, 4, 1, 311, 2, 1, 22]: 12,  // microsoftCommercialCodeSigning
+        [1, 3, 6, 1, 4, 1, 311, 61, 1, 1]: 13,  // microsoftKernelCodeSigning
     ]
 }
