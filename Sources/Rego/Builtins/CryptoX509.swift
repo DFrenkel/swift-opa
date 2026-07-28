@@ -71,7 +71,7 @@ extension BuiltinFuncs {
             throw BuiltinError.evalError(msg: "asn1: structure error: \(error)")
         }
 
-        return csrToRegoValue(csr)
+        return csrObject(csr, der: der)
     }
 
     static func x509ParseKeyPair(ctx: BuiltinContext, args: [AST.RegoValue]) throws -> AST.RegoValue {
@@ -324,14 +324,6 @@ extension BuiltinFuncs {
             ]),
             .string("DNSNames"): namesArrayOrNull(dns),
             .string("URIStrings"): namesArrayOrNull(uris),
-        ])
-    }
-
-    fileprivate static func csrToRegoValue(_ csr: CertificateSigningRequest) -> AST.RegoValue {
-        return .object([
-            .string("Subject"): .object([
-                .string("CommonName"): .string(commonName(csr.subject) ?? "")
-            ])
         ])
     }
 

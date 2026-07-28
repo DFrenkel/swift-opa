@@ -15,6 +15,7 @@ extension BuiltinTests.CryptoX509CertificateTests {
     // field against OPA's golden output.
     static let deferredKeys: Set<String> = [
         "RawTBSCertificate", "RawSubject", "RawIssuer", "RawSubjectPublicKeyInfo",
+        "RawTBSCertificateRequest",
     ]
 
     private static func stripDeferred(_ value: AST.RegoValue) -> AST.RegoValue {
@@ -39,5 +40,12 @@ extension BuiltinTests.CryptoX509CertificateTests {
         for (got, want) in zip(gotCerts, wantCerts) {
             #expect(got == Self.stripDeferred(want))
         }
+    }
+
+    @Test func csrMatchesOpaGolden() throws {
+        let fixture = try BuiltinTests.cryptoX509Fixture("csr")
+        let got = try BuiltinFuncs.x509ParseCertificateRequest(
+            ctx: BuiltinContext(), args: [.string(fixture.input)])
+        #expect(got == Self.stripDeferred(fixture.want))
     }
 }

@@ -137,6 +137,40 @@ extension BuiltinFuncs {
         return Array(bits.dropFirst())
     }
 
+    // MARK: - Certificate signing request
+
+    /// Builds the Go `x509.CertificateRequest` object. SAN and extension-request
+    /// attributes are not parsed this round (emitted null), which matches CSRs
+    /// that carry none.
+    static func csrObject(_ csr: CertificateSigningRequest, der: [UInt8]) -> AST.RegoValue {
+        var publicKeyAlgorithm = 0
+        var publicKey: AST.RegoValue = .null
+        var serializer = DER.Serializer()
+        if (try? serializer.serialize(csr.publicKey)) != nil,
+            let obj = publicKeyObject(fromSPKIDer: serializer.serializedBytes)
+        {
+            publicKeyAlgorithm = obj.algorithm
+            publicKey = obj.key
+        }
+
+        return .object([
+            .string("Raw"): .string(Data(der).base64EncodedString()),
+            .string("Version"): regoInt(csr.version.rawValue),
+            .string("Subject"): nameObject(csr.subject),
+            .string("SignatureAlgorithm"): regoInt(goSignatureAlgorithm(csr.signatureAlgorithm)),
+            .string("Signature"): .string(Data(signatureBytes(fromCertDER: der)).base64EncodedString()),
+            .string("PublicKeyAlgorithm"): regoInt(publicKeyAlgorithm),
+            .string("PublicKey"): publicKey,
+            .string("DNSNames"): .null,
+            .string("EmailAddresses"): .null,
+            .string("IPAddresses"): .null,
+            .string("URIs"): .null,
+            .string("Extensions"): .null,
+            .string("ExtraExtensions"): .null,
+            .string("Attributes"): .null,
+        ])
+    }
+
     // MARK: - Permissive DER path
 
     /// Builds `CertFields` for certificates swift-certificates refuses to
