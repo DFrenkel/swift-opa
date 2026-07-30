@@ -294,6 +294,40 @@ We recommend sticking to the supported RE2 regex syntax, in order to avoid futur
 
 </details>
 
+<details>
+<summary><b>crypto.x509 field coverage (Click to expand)</b></summary>
+
+### crypto.x509 certificate and CSR fields
+
+OPA parses certificates with Go's `crypto/x509` and returns the full marshaled
+`x509.Certificate` struct. The `crypto.x509.*` builtins here emit the same Go
+field names and encodings (int enums for `SignatureAlgorithm`/`PublicKeyAlgorithm`/
+`KeyUsage`/`ExtKeyUsage`, RFC3339 timestamps, base64 byte blobs, nil slice →
+`null`) for the high-value tier of fields: `Version`, `SerialNumber`, `Subject`,
+`Issuer`, `NotBefore`/`NotAfter`, the signature and public-key algorithms,
+`PublicKey`, key usage and basic constraints, `SubjectKeyId`/`AuthorityKeyId`,
+the SAN slices, OCSP/CRL/issuer URLs, policy identifiers, and the raw `Extensions`
+list. Output is validated against golden fixtures captured from the `opa` binary.
+
+Current differences from upstream OPA:
+
+> [!NOTE]
+> - **Big integers are strings.** `SerialNumber` and the RSA/ECDSA public-key
+>   components (`N`, `X`, `Y`) are emitted as decimal strings, not JSON numbers,
+>   because the engine's number type cannot yet hold values of that size without
+>   loss. This will change to numbers once arbitrary-precision numbers land.
+> - **Deferred fields.** The sub-structure `Raw*` blobs (`RawTBSCertificate`,
+>   `RawSubject`, `RawIssuer`, `RawSubjectPublicKeyInfo`), URI SANs as Go
+>   `url.URL` objects, and full name-constraint / policy-mapping parsing are not
+>   emitted yet. Name-constraint and policy-inhibit fields are present at Go's
+>   zero values, which matches certificates that omit them.
+> - **CSR SANs.** `parse_certificate_request` does not yet parse SAN or
+>   extension-request attributes; those fields are emitted as `null`.
+> - **`parse_and_verify_certificates_with_options`** does not yet honor the
+>   options object.
+
+</details>
+
 ## Version Support
 
 We aim to support "latest Swift major version - 2" releases back. As an example, for Swift 6.4, that implies supporting Swift 6.3, and 6.2 as well.
