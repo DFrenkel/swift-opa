@@ -309,56 +309,6 @@ extension BuiltinFuncs {
 // MARK: - Certificate to RegoValue
 
 extension BuiltinFuncs {
-    /// Builds the compliance-driven subset object for a certificate.
-    fileprivate static func certificateToRegoValue(_ cert: Certificate) -> AST.RegoValue {
-        let (dnsNames, uriStrings) = subjectAltNames(cert)
-        return certificateObject(commonName: commonName(cert.subject) ?? "", dns: dnsNames, uris: uriStrings)
-    }
-
-    /// Shared object shape for a parsed certificate, used by both the
-    /// swift-certificates path and the permissive swift-asn1 fallback.
-    fileprivate static func certificateObject(commonName: String, dns: [String], uris: [String]) -> AST.RegoValue {
-        return .object([
-            .string("Subject"): .object([
-                .string("CommonName"): .string(commonName)
-            ]),
-            .string("DNSNames"): namesArrayOrNull(dns),
-            .string("URIStrings"): namesArrayOrNull(uris),
-        ])
-    }
-
-    /// Extracts the CommonName from a distinguished name, if present.
-    fileprivate static func commonName(_ dn: DistinguishedName) -> String? {
-        for rdn in dn {
-            for attribute in rdn where attribute.type == .RDNAttributeType.commonName {
-                if let value = String(attribute.value) {
-                    return value
-                }
-            }
-        }
-        return nil
-    }
-
-    /// Returns the DNS names and URI strings from a certificate's Subject
-    /// Alternative Name extension.
-    fileprivate static func subjectAltNames(_ cert: Certificate) -> (dns: [String], uris: [String]) {
-        var dns: [String] = []
-        var uris: [String] = []
-        if let san = try? cert.extensions.subjectAlternativeNames {
-            for name in san {
-                switch name {
-                case .dnsName(let value):
-                    dns.append(value)
-                case .uniformResourceIdentifier(let value):
-                    uris.append(value)
-                default:
-                    break
-                }
-            }
-        }
-        return (dns, uris)
-    }
-
     /// OPA (via Go's json.Marshal) emits an absent string slice as null rather
     /// than an empty array.
     static func namesArrayOrNull(_ names: [String]) -> AST.RegoValue {
@@ -372,28 +322,37 @@ extension BuiltinFuncs {
     /// Verifies that the supplied certificates form a chain and returns
     /// `[valid, [certs...]]` with the chain ordered leaf-to-root, matching OPA.
     fileprivate static func verifyCertificateChain(from input: String, now: Date) throws -> AST.RegoValue {
-        let certs = try parseCertificates(from: input)
-        guard let leaf = certs.last else {
+        let blocks = try certificateDERBlocks(from: input)
+        var parsed: [(cert: Certificate, der: [UInt8])] = []
+        parsed.reserveCapacity(blocks.count)
+        for block in blocks {
+            guard let cert = try? Certificate(derEncoded: block) else {
+                throw BuiltinError.evalError(msg: "x509: malformed certificate")
+            }
+            parsed.append((cert, block))
+        }
+        guard let leaf = parsed.last else {
             return .array([.boolean(false), .array([])])
         }
 
-        var chain: [Certificate] = [leaf]
-        var current = leaf
+        var chain: [(cert: Certificate, der: [UInt8])] = [leaf]
+        var current = leaf.cert
         var valid = true
 
         while current.issuer != current.subject {
             guard
-                let issuer = certs.first(where: {
-                    $0.subject == current.issuer && $0.publicKey.isValidSignature(current.signature, for: current)
+                let issuer = parsed.first(where: {
+                    $0.cert.subject == current.issuer
+                        && $0.cert.publicKey.isValidSignature(current.signature, for: current)
                 })
             else {
                 valid = false
                 break
             }
             chain.append(issuer)
-            current = issuer
+            current = issuer.cert
             // Guard against cycles in a malformed input set.
-            if chain.count > certs.count {
+            if chain.count > parsed.count {
                 valid = false
                 break
             }
@@ -407,11 +366,11 @@ extension BuiltinFuncs {
         }
 
         // Every certificate in the chain must be within its validity window.
-        for cert in chain where now < cert.notValidBefore || now > cert.notValidAfter {
+        for entry in chain where now < entry.cert.notValidBefore || now > entry.cert.notValidAfter {
             valid = false
         }
 
-        let certValues = chain.map { certificateToRegoValue($0) }
+        let certValues = chain.map { certificateObject(certFields(fromSwiftCert: $0.cert, der: $0.der)) }
         return .array([.boolean(valid), .array(certValues)])
     }
 }

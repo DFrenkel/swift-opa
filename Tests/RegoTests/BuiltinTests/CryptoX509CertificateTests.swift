@@ -48,4 +48,23 @@ extension BuiltinTests.CryptoX509CertificateTests {
             ctx: BuiltinContext(), args: [.string(fixture.input)])
         #expect(got == Self.stripDeferred(fixture.want))
     }
+
+    // parse_and_verify_certificates must emit the full certificate objects, not
+    // the old CommonName-only subset.
+    @Test func parseAndVerifyEmitsFullCertObjects() throws {
+        let fixture = try BuiltinTests.cryptoX509Fixture("chain")
+        let result = try BuiltinFuncs.x509ParseAndVerifyCertificates(
+            ctx: BuiltinContext(), args: [.string(fixture.input)])
+        let outer = try #require(result.asArray)
+        #expect(outer.count == 2)
+        let certs = try #require(outer[1].asArray)
+        #expect(!certs.isEmpty)
+        for cert in certs {
+            let obj = try #require(cert.asObject)
+            #expect(obj[.string("Version")] != nil)
+            #expect(obj[.string("PublicKey")] != nil)
+            #expect(obj[.string("NotBefore")] != nil)
+            #expect(obj[.string("SerialNumber")] != nil)
+        }
+    }
 }
