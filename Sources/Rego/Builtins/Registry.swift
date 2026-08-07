@@ -172,8 +172,16 @@ public struct BuiltinRegistry: Sendable {
             "crypto.hmac.sha256": BuiltinFuncs.sha256HMAC,
             "crypto.hmac.sha512": BuiltinFuncs.sha512HMAC,
             "crypto.md5": BuiltinFuncs.insecureMD5Hash,
+            "crypto.parse_private_keys": BuiltinFuncs.parsePrivateKeys,
             "crypto.sha1": BuiltinFuncs.insecureSHA1Hash,
             "crypto.sha256": BuiltinFuncs.sha256Hash,
+            "crypto.x509.parse_and_verify_certificates": BuiltinFuncs.x509ParseAndVerifyCertificates,
+            "crypto.x509.parse_and_verify_certificates_with_options": BuiltinFuncs
+                .x509ParseAndVerifyCertificatesWithOptions,
+            "crypto.x509.parse_certificate_request": BuiltinFuncs.x509ParseCertificateRequest,
+            "crypto.x509.parse_certificates": BuiltinFuncs.x509ParseCertificates,
+            "crypto.x509.parse_keypair": BuiltinFuncs.x509ParseKeyPair,
+            "crypto.x509.parse_rsa_private_key": BuiltinFuncs.x509ParseRSAPrivateKey,
 
             // Encoding
             "base64.encode": BuiltinFuncs.base64Encode,

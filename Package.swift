@@ -37,6 +37,8 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.5.0"),
         .package(url: "https://github.com/jpsim/Yams", from: "6.2.1"),
+        .package(url: "https://github.com/apple/swift-certificates.git", "1.0.0"..<"2.0.0"),
+        .package(url: "https://github.com/apple/swift-asn1.git", "1.1.0"..<"2.0.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -62,6 +64,8 @@ let package = Package(
                 "Bytecode",
                 .product(name: "Crypto", package: "swift-crypto", condition: .when(platforms: [.linux])),
                 .product(name: "Yams", package: "Yams", condition: .when(traits: ["YAML"])),
+                .product(name: "X509", package: "swift-certificates"),
+                .product(name: "SwiftASN1", package: "swift-asn1"),
             ]
         ),
         .target(

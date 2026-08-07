@@ -527,6 +527,31 @@
           }
         ],
         "result" : {
+          "dynamic" : {
+            "dynamic" : {
+              "key" : {
+                "type" : "string"
+              },
+              "value" : {
+                "type" : "any"
+              }
+            },
+            "type" : "object"
+          },
+          "type" : "array"
+        },
+        "type" : "function"
+      },
+      "name" : "crypto.parse_private_keys"
+    },
+    {
+      "decl" : {
+        "args" : [
+          {
+            "type" : "string"
+          }
+        ],
+        "result" : {
           "type" : "string"
         },
         "type" : "function"
@@ -546,6 +571,177 @@
         "type" : "function"
       },
       "name" : "crypto.sha256"
+    },
+    {
+      "decl" : {
+        "args" : [
+          {
+            "type" : "string"
+          }
+        ],
+        "result" : {
+          "static" : [
+            {
+              "type" : "boolean"
+            },
+            {
+              "dynamic" : {
+                "dynamic" : {
+                  "key" : {
+                    "type" : "string"
+                  },
+                  "value" : {
+                    "type" : "any"
+                  }
+                },
+                "type" : "object"
+              },
+              "type" : "array"
+            }
+          ],
+          "type" : "array"
+        },
+        "type" : "function"
+      },
+      "name" : "crypto.x509.parse_and_verify_certificates"
+    },
+    {
+      "decl" : {
+        "args" : [
+          {
+            "type" : "string"
+          },
+          {
+            "dynamic" : {
+              "key" : {
+                "type" : "string"
+              },
+              "value" : {
+                "type" : "any"
+              }
+            },
+            "type" : "object"
+          }
+        ],
+        "result" : {
+          "static" : [
+            {
+              "type" : "boolean"
+            },
+            {
+              "dynamic" : {
+                "dynamic" : {
+                  "key" : {
+                    "type" : "string"
+                  },
+                  "value" : {
+                    "type" : "any"
+                  }
+                },
+                "type" : "object"
+              },
+              "type" : "array"
+            }
+          ],
+          "type" : "array"
+        },
+        "type" : "function"
+      },
+      "name" : "crypto.x509.parse_and_verify_certificates_with_options"
+    },
+    {
+      "decl" : {
+        "args" : [
+          {
+            "type" : "string"
+          }
+        ],
+        "result" : {
+          "dynamic" : {
+            "key" : {
+              "type" : "string"
+            },
+            "value" : {
+              "type" : "any"
+            }
+          },
+          "type" : "object"
+        },
+        "type" : "function"
+      },
+      "name" : "crypto.x509.parse_certificate_request"
+    },
+    {
+      "decl" : {
+        "args" : [
+          {
+            "type" : "string"
+          }
+        ],
+        "result" : {
+          "dynamic" : {
+            "dynamic" : {
+              "key" : {
+                "type" : "string"
+              },
+              "value" : {
+                "type" : "any"
+              }
+            },
+            "type" : "object"
+          },
+          "type" : "array"
+        },
+        "type" : "function"
+      },
+      "name" : "crypto.x509.parse_certificates"
+    },
+    {
+      "decl" : {
+        "args" : [
+          {
+            "type" : "string"
+          },
+          {
+            "type" : "string"
+          }
+        ],
+        "result" : {
+          "dynamic" : {
+            "key" : {
+              "type" : "string"
+            },
+            "value" : {
+              "type" : "any"
+            }
+          },
+          "type" : "object"
+        },
+        "type" : "function"
+      },
+      "name" : "crypto.x509.parse_keypair"
+    },
+    {
+      "decl" : {
+        "args" : [
+          {
+            "type" : "string"
+          }
+        ],
+        "result" : {
+          "dynamic" : {
+            "key" : {
+              "type" : "string"
+            },
+            "value" : {
+              "type" : "any"
+            }
+          },
+          "type" : "object"
+        },
+        "type" : "function"
+      },
+      "name" : "crypto.x509.parse_rsa_private_key"
     },
     {
       "decl" : {
